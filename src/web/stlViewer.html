@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>STL Viewer</title>
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+    }
+    canvas {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/STLLoader.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+  <script>
+    let scene, camera, renderer, controls;
+
+    function init() {
+      console.log("Initializing scene...");
+
+      scene = new THREE.Scene();
+      camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+      renderer = new THREE.WebGLRenderer();
+renderer.setPixelRatio(window.devicePixelRatio / 1.5);
+renderer.setSize(window.innerWidth, window.innerHeight);
+
+      document.body.appendChild(renderer.domElement);
+
+      const light = new THREE.DirectionalLight(0xffffff, 1);
+      light.position.set(1, 1, 1).normalize();
+      scene.add(light);
+
+      const loader = new THREE.STLLoader();
+      loader.load('../assets/hand_post.stl', function (geometry) {
+        console.log("STL file loaded successfully");
+        const material = new THREE.MeshLambertMaterial({ color: 0x7777ff });
+        const mesh =  new THREE.Mesh(geometry, material);
+        mesh.scale.set(0.5, 0.5, 0.5); // model scaling
+        scene.add(mesh);
+
+        // Center the model
+        geometry.computeBoundingBox();
+        const boundingBox = geometry.boundingBox;
+        const center = boundingBox.getCenter(new THREE.Vector3());
+        mesh.position.set(-center.x, -center.y, -center.z);
+
+     
+        const maxDim = Math.max(boundingBox.max.x - boundingBox.min.x, boundingBox.max.y - boundingBox.min.y, boundingBox.max.z - boundingBox.min.z);
+        const fov = camera.fov * (Math.PI / 180);
+        let cameraZ = Math.abs(maxDim / 2 / Math.tan(fov / 2));
+        camera.position.set(cameraZ, cameraZ, cameraZ);
+        camera.lookAt(new THREE.Vector3(0, 0, 0));
+
+        animate();
+      }, undefined, function (error) {
+        console.error("An error happened during STL loading:", error);
+      });
+
+      // Initialize OrbitControls
+      controls = new THREE.OrbitControls(camera, renderer.domElement);
+      controls.enableDamping = true;
+      controls.dampingFactor = 0.25;
+      controls.screenSpacePanning = false;
+      controls.maxPolarAngle = Math.PI / 2;
+
+      // Handle window resize
+      window.addEventListener('resize', onWindowResize, false);
+    }
+
+    function onWindowResize() {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    }
+
+    function animate() {
+      requestAnimationFrame(animate);
+      controls.update(); // Only required if controls.enableDamping = true, or if controls.autoRotate = true
+      renderer.render(scene, camera);
+    }
+
+    init();
+  </script>
+</body>
+</html>
