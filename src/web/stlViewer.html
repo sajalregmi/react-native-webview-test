@@ -94,6 +94,13 @@ canvas {
       const loader = new THREE.STLLoader();
       loader.load('../assets/doll_bed_post.stl', function (geometry) {
         console.log("STL file loaded successfully");
+
+
+        if (!geometry) {
+          console.log("Failed to load STL geometry.");
+          return;
+        }
+
         const material = new THREE.MeshLambertMaterial({ color: 0x7777ff });
         mesh = new THREE.Mesh(geometry, material);
         mesh.scale.set(0.5, 0.5, 0.5); // Scale down the model
@@ -147,6 +154,7 @@ canvas {
     function animate() {
       requestAnimationFrame(animate);
       controls.update(); 
+      renderer.render(scene, camera);
     }
 
     function openBottomSheet() {

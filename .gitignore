@@ -15,10 +15,10 @@ build/
 !default.perspectivev3
 xcuserdata
 *.xccheckout
+*.stl
 *.moved-aside
 DerivedData
 *.hmap
-# *.stl
 *.ipa
 *.xcuserstate
 **/.xcode.env.local
@@ -32,6 +32,7 @@ local.properties
 *.iml
 *.hprof
 .cxx/
+
 *.keystore
 !debug.keystore
 
