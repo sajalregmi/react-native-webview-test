@@ -6,7 +6,7 @@ const WebViewPage = () => {
   return (
     <View style={styles.container}>
       <Text>WebViewPage is being rendered</Text>
-      <WebView source={{ uri: 'http://127.0.0.1:8081/web/stlViewer.html' }} />
+      <WebView source={{ uri: 'http://localhost:8080/web/stlViewer.html' }} />
     </View>
   );
 };
