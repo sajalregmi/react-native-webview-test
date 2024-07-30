@@ -8,7 +8,7 @@ const WebViewPage = () => {
       <WebView 
         source={{ uri: 'http://localhost:8080/web/scrollTest.html' }} 
         style={styles.webview}
-        javaScriptEnabled={true}  // Enable JavaScript
+        javaScriptEnabled={true} 
         injectedJavaScript={`const style = document.createElement('style');
                                style.innerHTML = 'body { overflow-x: hidden; }';
                                document.head.appendChild(style);`}

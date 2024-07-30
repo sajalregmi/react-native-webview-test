@@ -10,7 +10,7 @@
             flex-direction: column;
             margin: 0;
             height: 100vh;
-            overflow-x: hidden; /* Prevent horizontal scrolling */
+            overflow-x: hidden; 
         }
 
         .navbar {
@@ -18,8 +18,8 @@
             background-color: #007bff;
             color: white;
             text-align: center;
-            padding: 20px 0; /* Increased padding to make the navbar larger */
-            font-size: 20px; /* Increased font size for better visibility */
+            padding: 20px 0; 
+            font-size: 20px; 
         }
 
         .content {
@@ -42,11 +42,11 @@
 
         .main-content {
             flex: 1;
-            margin-left: 100px; /* Make space for the fixed side panel */
+            margin-left: 100px; 
             padding: 10px;
             box-sizing: border-box;
-            overflow-y: auto; /* Allow only the main content area to scroll vertically */
-            overflow-x: hidden; /* Prevent horizontal scrolling */
+            overflow-y: auto; 
+            overflow-x: hidden; 
         }
 
         .input-button {
@@ -145,7 +145,7 @@
         top: elementPosition,
         behavior: 'smooth'
     });
-    element.querySelector('input').focus();  // Set focus on the input field
+    element.querySelector('input').focus();  
 }
 
 document.querySelectorAll('.input-field input').forEach(input => {
@@ -158,7 +158,7 @@ document.querySelectorAll('.input-field input').forEach(input => {
                 top: elementPosition,
                 behavior: 'smooth'
             });
-        }, 300); // Adjust timeout as needed
+        }, 300); 
     });
 });
 
