@@ -10,7 +10,7 @@
             flex-direction: column;
             margin: 0;
             height: 100vh;
-            overflow-x: hidden; 
+            overflow-x: hidden; /* Prevent horizontal scrolling */
         }
 
         .navbar {
@@ -18,8 +18,8 @@
             background-color: #007bff;
             color: white;
             text-align: center;
-            padding: 20px 0; 
-            font-size: 20px; 
+            padding: 20px 0; /* Increased padding to make the navbar larger */
+            font-size: 20px; /* Increased font size for better visibility */
         }
 
         .content {
@@ -31,37 +31,37 @@
         .side-panel {
             width: 100px; 
             background-color: #f0f0f0;
-            padding: 10px;
+            padding: 5px;
             box-sizing: border-box;
-            overflow: hidden;
-            border-right: 2px solid #ccc; 
+            overflow: hidden; 
+            border-right: 2px solid #ccc;
             position: fixed; 
             height: calc(100% - 60px); 
-            top: 60px; 
+            top: 60px;
         }
 
         .main-content {
             flex: 1;
-            margin-left: 100px; 
+            margin-left: 100px; /* Make space for the fixed side panel */
             padding: 10px;
             box-sizing: border-box;
-            overflow-y: auto; 
-            overflow-x: hidden; 
+            overflow-y: auto; /* Allow only the main content area to scroll vertically */
+            overflow-x: hidden; /* Prevent horizontal scrolling */
         }
 
         .input-button {
             display: block;
-            width: 60px; 
-            height: 60px; 
+            width: 20px; 
+            height: 20px; 
             padding: 0;
-            margin: 10px auto;
+            margin: 5px auto;
             background-color: white;
             border: 1px solid #ccc;
-            border-radius: 50%;
+            border-radius: 50%; 
             text-align: center;
-            line-height: 60px;
+            line-height: 40px; 
             cursor: pointer;
-            font-size: 12px;
+            font-size: 10px; 
         }
 
         .input-field {
@@ -71,7 +71,7 @@
         .button-container {
             display: flex;
             flex-direction: column;
-            align-items: center; 
+            align-items: center;
         }
     </style>
 </head>
@@ -86,9 +86,11 @@
                 <button class="input-button" onclick="scrollToField('field4')">Line Y</button>
                 <button class="input-button" onclick="scrollToField('field5')">Line Z</button>
 
-                <button class="input-button" onclick="scrollToField('field6')">Line X</button>
-                <button class="input-button" onclick="scrollToField('field7')">Line Y</button>
-                <button class="input-button" onclick="scrollToField('field8')">Line Z</button>
+
+                <button class="input-button" onclick="scrollToField('field6')">Layer</button>
+                <button class="input-button" onclick="scrollToField('field7')">Line X</button>
+                <button class="input-button" onclick="scrollToField('field8')">Line Y</button>
+                <button class="input-button" onclick="scrollToField('field9')">Line Z</button>
             </div>
         </div>
         <div class="main-content">
@@ -113,30 +115,34 @@
                 <input type="text" id="lineZ">
             </div>
 
+
+
             <div class="input-field" id="field6">
+                <label for="layerHeight">Layer Height</label>
+                <input type="text" id="layerHeight">
+            </div>
+            <div class="input-field" id="field7">
                 <label for="lineX">Line X</label>
                 <input type="text" id="lineX">
             </div>
-            <div class="input-field" id="field7">
+            <div class="input-field" id="field8">
                 <label for="lineY">Line Y</label>
                 <input type="text" id="lineY">
             </div>
-            <div class="input-field" id="field8">
+            <div class="input-field" id="field9">
                 <label for="lineZ">Line Z</label>
                 <input type="text" id="lineZ">
             </div>
         </div>
     </div>
     <script>
-      function scrollToField(fieldId) {
+        function scrollToField(fieldId) {
     const element = document.getElementById(fieldId);
     const mainContent = document.querySelector('.main-content');
-    const elementPosition = element.getBoundingClientRect().top;
-    const mainContentPosition = mainContent.getBoundingClientRect().top;
-    const offsetPosition = elementPosition - mainContentPosition + mainContent.scrollTop;
-    
+    const elementPosition = element.offsetTop - mainContent.offsetTop;
+
     mainContent.scrollTo({
-        top: offsetPosition,
+        top: elementPosition,
         behavior: 'smooth'
     });
     element.querySelector('input').focus();  // Set focus on the input field
@@ -146,15 +152,13 @@ document.querySelectorAll('.input-field input').forEach(input => {
     input.addEventListener('focus', () => {
         setTimeout(() => {
             const mainContent = document.querySelector('.main-content');
-            const elementPosition = input.getBoundingClientRect().top;
-            const mainContentPosition = mainContent.getBoundingClientRect().top;
-            const offsetPosition = elementPosition - mainContentPosition + mainContent.scrollTop;
-            
+            const elementPosition = input.offsetTop - mainContent.offsetTop;
+
             mainContent.scrollTo({
-                top: offsetPosition,
+                top: elementPosition,
                 behavior: 'smooth'
             });
-        }, 300);
+        }, 300); // Adjust timeout as needed
     });
 });
 
