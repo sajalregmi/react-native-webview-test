@@ -92,7 +92,7 @@ canvas {
       scene.add(light);
 
       const loader = new THREE.STLLoader();
-      loader.load('../assets/doll_bed_post.stl', function (geometry) {
+      loader.load('http://localhost:8080/assets/doll_bed_post.stl', function (geometry) {
         console.log("STL file loaded successfully");
 
 

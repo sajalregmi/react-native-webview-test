@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scrolling Example</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            margin: 0;
+            height: 100vh;
+            overflow-x: hidden; 
+        }
+
+        .navbar {
+            width: 100%;
+            background-color: #007bff;
+            color: white;
+            text-align: center;
+            padding: 20px 0; 
+            font-size: 20px; 
+        }
+
+        .content {
+            display: flex;
+            flex: 1;
+            overflow: hidden; 
+        }
+
+        .side-panel {
+            width: 100px; 
+            background-color: #f0f0f0;
+            padding: 10px;
+            box-sizing: border-box;
+            overflow: hidden;
+            border-right: 2px solid #ccc; 
+            position: fixed; 
+            height: calc(100% - 60px); 
+            top: 60px; 
+        }
+
+        .main-content {
+            flex: 1;
+            margin-left: 100px; 
+            padding: 10px;
+            box-sizing: border-box;
+            overflow-y: auto; 
+            overflow-x: hidden; 
+        }
+
+        .input-button {
+            display: block;
+            width: 60px; 
+            height: 60px; 
+            padding: 0;
+            margin: 10px auto;
+            background-color: white;
+            border: 1px solid #ccc;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 60px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+
+        .input-field {
+            margin-bottom: 20px;
+        }
+
+        .button-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center; 
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">Navbar goes here</div>
+    <div class="content">
+        <div class="side-panel">
+            <div class="button-container">
+                <button class="input-button" onclick="scrollToField('field1')">Infill</button>
+                <button class="input-button" onclick="scrollToField('field2')">Layer</button>
+                <button class="input-button" onclick="scrollToField('field3')">Line X</button>
+                <button class="input-button" onclick="scrollToField('field4')">Line Y</button>
+                <button class="input-button" onclick="scrollToField('field5')">Line Z</button>
+            </div>
+        </div>
+        <div class="main-content">
+            <div class="input-field" id="field1">
+                <label for="infillDensity">Infill Density</label>
+                <input type="text" id="infillDensity">
+            </div>
+            <div class="input-field" id="field2">
+                <label for="layerHeight">Layer Height</label>
+                <input type="text" id="layerHeight">
+            </div>
+            <div class="input-field" id="field3">
+                <label for="lineX">Line X</label>
+                <input type="text" id="lineX">
+            </div>
+            <div class="input-field" id="field4">
+                <label for="lineY">Line Y</label>
+                <input type="text" id="lineY">
+            </div>
+            <div class="input-field" id="field5">
+                <label for="lineZ">Line Z</label>
+                <input type="text" id="lineZ">
+            </div>
+        </div>
+    </div>
+    <script>
+        function scrollToField(fieldId) {
+            const element = document.getElementById(fieldId);
+            element.scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'nearest' });
+            element.querySelector('input').focus();
+        }
+
+        document.querySelectorAll('.input-field input').forEach(input => {
+            input.addEventListener('focus', () => {
+                setTimeout(() => {
+                    input.scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'nearest' });
+                }, 300);
+            });
+        });
+    </script>
+</body>
+</html>
