@@ -85,6 +85,10 @@
                 <button class="input-button" onclick="scrollToField('field3')">Line X</button>
                 <button class="input-button" onclick="scrollToField('field4')">Line Y</button>
                 <button class="input-button" onclick="scrollToField('field5')">Line Z</button>
+
+                <button class="input-button" onclick="scrollToField('field6')">Line X</button>
+                <button class="input-button" onclick="scrollToField('field7')">Line Y</button>
+                <button class="input-button" onclick="scrollToField('field8')">Line Z</button>
             </div>
         </div>
         <div class="main-content">
@@ -108,22 +112,52 @@
                 <label for="lineZ">Line Z</label>
                 <input type="text" id="lineZ">
             </div>
+
+            <div class="input-field" id="field6">
+                <label for="lineX">Line X</label>
+                <input type="text" id="lineX">
+            </div>
+            <div class="input-field" id="field7">
+                <label for="lineY">Line Y</label>
+                <input type="text" id="lineY">
+            </div>
+            <div class="input-field" id="field8">
+                <label for="lineZ">Line Z</label>
+                <input type="text" id="lineZ">
+            </div>
         </div>
     </div>
     <script>
-        function scrollToField(fieldId) {
-            const element = document.getElementById(fieldId);
-            element.scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'nearest' });
-            element.querySelector('input').focus();
-        }
+      function scrollToField(fieldId) {
+    const element = document.getElementById(fieldId);
+    const mainContent = document.querySelector('.main-content');
+    const elementPosition = element.getBoundingClientRect().top;
+    const mainContentPosition = mainContent.getBoundingClientRect().top;
+    const offsetPosition = elementPosition - mainContentPosition + mainContent.scrollTop;
+    
+    mainContent.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth'
+    });
+    element.querySelector('input').focus();  // Set focus on the input field
+}
 
-        document.querySelectorAll('.input-field input').forEach(input => {
-            input.addEventListener('focus', () => {
-                setTimeout(() => {
-                    input.scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'nearest' });
-                }, 300);
+document.querySelectorAll('.input-field input').forEach(input => {
+    input.addEventListener('focus', () => {
+        setTimeout(() => {
+            const mainContent = document.querySelector('.main-content');
+            const elementPosition = input.getBoundingClientRect().top;
+            const mainContentPosition = mainContent.getBoundingClientRect().top;
+            const offsetPosition = elementPosition - mainContentPosition + mainContent.scrollTop;
+            
+            mainContent.scrollTo({
+                top: offsetPosition,
+                behavior: 'smooth'
             });
-        });
+        }, 300);
+    });
+});
+
     </script>
 </body>
 </html>
